@@ -5,6 +5,7 @@ summary:  Enable the SLB9670 TPM2 module on the Raspberry Pi 2/3 on Ubuntu Core 
 description: |
   Enable the SLB9670 TPM2 module on the Raspberry Pi 2/3 by automatically shipping and loading
   a device tree overlay and the tpm_tis_spi driver on boot
+architectures: [armhf, arm64]
 
 grade: devel
 confinement: devmode
