@@ -1,0 +1,62 @@
+#!/bin/bash
+set -e
+
+NAME=rpi-tpm2-slb9670-hwe
+OVERLAY=tpm-slb9670
+DTBO=${OVERLAY}.dtbo
+DRIVER=tpm_tis_spi
+DEVICE=spi0.1
+DTBO_PATH=${SNAP}/boot/uboot/overlays/${DTBO}
+SYSFS_OVERLAY_PATH=/sys/kernel/config/device-tree/overlays/${OVERLAY}
+SYSFS_DEVICE_PATH=/sys/bus/spi/devices/${DEVICE}/
+SYSFS_DRIVER_PATH=/sys/bus/spi/drivers/${DRIVER}/
+
+function cmd_enable () {
+  mkdir -p ${SYSFS_OVERLAY_PATH}
+  cat ${DTBO_PATH} > ${SYSFS_OVERLAY_PATH}/dtbo
+  modprobe ${DRIVER}
+}
+
+function cmd_disable () {
+  rmmod ${DRIVER}
+}
+
+function get_status () {
+  # check overlay is loaded
+  if [ -d ${SYSFS_OVERLAY_PATH} ]; then
+    # check driver is bound to device
+    if [ "$(readlink ${SYSFS_DEVICE_PATH}/driver)" = ${SYSFS_DRIVER_PATH} ]; then
+      echo "enabled"
+    else
+      echo "${DRIVER} driver not bound to device"
+    fi
+  else
+    echo "device tree overlay is not loaded"
+  fi
+}
+
+function cmd_status () {
+  echo -n "$NAME:"
+  get_status
+}
+
+cmd=${1:-status}
+
+case "$cmd" in
+  status)
+    cmd_status
+    ;;
+
+  enable)
+    cmd_enable
+    ;;
+
+  disable)
+    cmd_disable
+    ;;
+
+  *)
+    cmd_enable
+    cmd_status
+    ;;
+esac

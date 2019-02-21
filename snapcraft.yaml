@@ -1,0 +1,23 @@
+name: rpi-tpm2-slb9670-hwe
+base: core18
+version: '0.1' # just for humans, typically '1.2+git' or '1.3.2'
+summary:  Enable the SLB9670 TPM2 module on the Raspberry Pi 2/3 on Ubuntu Core 18
+description: |
+  Enable the SLB9670 TPM2 module on the Raspberry Pi 2/3 by automatically shipping and loading
+  a device tree overlay and the tpm_tis_spi driver on boot
+
+grade: devel
+confinement: devmode
+
+apps:
+  rpi-tpm2-slb9670-hwe:
+    daemon: oneshot
+    command: rpi-tpm2-slb9670-hwe
+    plugs: [kernel-module-control]
+
+parts:
+  rpi-tpm2-slb9670-hwe:
+    source: .
+    plugin: make
+    build-packages:
+      - device-tree-compiler
