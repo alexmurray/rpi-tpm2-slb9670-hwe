@@ -8,7 +8,7 @@ description: |
 architectures: [armhf, arm64]
 
 grade: devel
-confinement: strict
+confinement: classic
 
 apps:
   rpi-tpm2-slb9670-hwe:
