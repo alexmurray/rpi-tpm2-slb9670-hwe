@@ -1,19 +1,19 @@
 #!/bin/bash
-set -e
+set -ex
 
 NAME=rpi-tpm2-slb9670-hwe
 OVERLAY=tpm-slb9670
-DTBO=${OVERLAY}.dtbo
+OVERLAY_DTBO=${OVERLAY}.dtbo
 DRIVER=tpm_tis_spi
 DEVICE=spi0.1
-DTBO_PATH=${SNAP}/boot/uboot/overlays/${DTBO}
+OVERLAY_DTBO_PATH=${SNAP}/boot/uboot/overlays/${OVERLAY_DTBO}
 SYSFS_OVERLAY_PATH=/sys/kernel/config/device-tree/overlays/${OVERLAY}
 SYSFS_DEVICE_PATH=/sys/bus/spi/devices/${DEVICE}/
 SYSFS_DRIVER_PATH=/sys/bus/spi/drivers/${DRIVER}/
 
 function cmd_enable () {
   mkdir -p ${SYSFS_OVERLAY_PATH}
-  cat ${DTBO_PATH} > ${SYSFS_OVERLAY_PATH}/dtbo
+  cat "${OVERLAY_DTBO_PATH}" > ${SYSFS_OVERLAY_PATH}/dtbo
   modprobe ${DRIVER}
 }
 
