@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -e
 
 NAME=rpi-tpm2-slb9670-hwe
 OVERLAY=tpm-slb9670

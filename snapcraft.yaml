@@ -8,12 +8,12 @@ description: |
 architectures: [armhf, arm64]
 
 grade: devel
-confinement: devmode
+confinement: strict
 
 apps:
   rpi-tpm2-slb9670-hwe:
     daemon: oneshot
-    command: rpi-tpm2-slb9670-hwe
+    command: rpi-tpm2-slb9670-hwe enable
     plugs: [kernel-module-control]
 
 parts:
