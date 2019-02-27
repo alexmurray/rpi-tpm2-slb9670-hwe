@@ -21,7 +21,7 @@ apps:
 plugs:
   system-files:
     write:
-      - /sys/kernel/config/device-tree/overlays/
+      - /sys/kernel/config/device-tree/overlays
 
 parts:
   rpi-tpm2-slb9670-hwe:
