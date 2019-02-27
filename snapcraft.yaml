@@ -13,7 +13,7 @@ confinement: strict
 apps:
   rpi-tpm2-slb9670-hwe:
     daemon: oneshot
-    command: rpi-tpm2-slb9670-hwe
+    command: usr/sbin/rpi-tpm2-slb9670-hwe
     plugs:
         - kernel-module-control
         - system-files
